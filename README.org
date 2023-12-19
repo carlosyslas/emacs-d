@@ -1,0 +1,162 @@
+* This is my personal emacs configuration
+
+* Base configuration
+
+** Custom file
+
+Save all emacs customizations in a separate file.
+
+#+begin_src emacs-lisp :tangle lisp/cyslas-base.el :mkdirp yes
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+
+  (when (file-exists-p custom-file)
+    (load-file custom-file))
+#+end_src
+
+** MacOS specific configuration
+
+#+begin_src emacs-lisp :tangle lisp/cyslas-base.el
+  (setq is-mac (equal system-type 'darwin))
+
+  (when is-mac
+    ;; Maximize frame
+    (add-hook 'emacs-startup-hook 'toggle-frame-maximized)
+    ;; Set option to nil to enable latin chars
+    (setq mac-option-modifier nil)
+    ;; Use control from Meta
+    (setq ns-command-modifier (quote meta))
+    ;; Set right option to control
+    (setq mac-right-option-modifier 'control)
+    (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+    (add-to-list 'default-frame-alist '(ns-appearance . dark)))
+#+end_src
+
+** Setup package.el
+
+#+begin_src emacs-lisp :tangle lisp/cyslas-base.el
+  (eval-and-compile
+    (customize-set-variable
+     'package-archives '(("org" . "https://orgmode.org/elpa/")
+			 ("melpa" . "https://melpa.org/packages/")
+			 ("gnu" . "https://elpa.gnu.org/packages/")))
+    (package-initialize)
+    (unless (package-installed-p 'leaf)
+      (package-refresh-contents)
+      (package-install 'leaf))
+
+    (leaf leaf-keywords
+      :ensure t
+      :init
+      ;; optional packages if you want to use :hydra, :el-get, :blackout,,,
+      (leaf hydra :ensure t)
+      (leaf el-get :ensure t)
+      (leaf blackout :ensure t)
+
+      :config
+      ;; initialize leaf-keywords.el
+      (leaf-keywords-init)))
+#+end_src
+
+
+#+begin_src emacs-lisp :tangle lisp/cyslas-base.el
+  ;; Provide cyslas-base package
+  (provide 'cyslas-base)
+#+end_src
+
+* UI
+
+** Declutter
+
+#+begin_src emacs-lisp :tangle lisp/cyslas-ui.el :mkdirp yes
+  (fset 'yes-or-no-p 'y-or-n-p)
+
+  (pending-delete-mode t)
+
+  (add-hook 'before-save-hook 'whitespace-cleanup)
+
+  (setq warning-minimum-level :error)
+
+  (setq initial-scratch-message nil)
+
+  (setq inhibit-startup-message t)
+
+  (menu-bar-mode -1)
+
+  (if (boundp 'tool-bar-mode)
+      (tool-bar-mode -1))
+
+  (if (boundp 'scroll-bar-mode)
+      (scroll-bar-mode -1))
+#+end_src
+
+** Spacious padding
+
+#+begin_src emacs-lisp :tangle lisp/cyslas-ui.el :mkdirp yes
+  (leaf spacious-padding
+    :ensure t
+    :config
+    (spacious-padding-mode))
+#+end_src
+
+** Theme
+
+#+begin_src emacs-lisp :tangle lisp/cyslas-ui.el :mkdirp yes
+  (leaf modus-themes
+    :ensure t
+    :config
+    (load-theme 'modus-vivendi-tinted))
+#+end_src
+
+
+** All the icons
+#+begin_src emacs-lisp :tangle lisp/cyslas-ui.el :mkdirp yes
+  (leaf all-the-icons
+    :ensure t)
+#+end_src
+
+** Modeline
+
+#+begin_src emacs-lisp :tangle lisp/cyslas-ui.el :mkdirp yes
+  (leaf doom-modeline
+    :ensure t
+    :init (doom-modeline-mode 1))
+#+end_src
+
+#+begin_src emacs-lisp :tangle lisp/cyslas-ui.el :mkdirp yes
+  (provide 'cyslas-ui)
+#+end_src
+
+* Coding
+
+#+begin_src emacs-lisp :tangle lisp/cyslas-coding.el :mkdirp yes
+  (leaf magit
+    :ensure t)
+#+end_src
+
+#+begin_src emacs-lisp :tangle lisp/cyslas-coding.el :mkdirp yes
+  (provide 'cyslas-coding)
+#+end_src
+
+* Some utility functions.
+
+Make it easy to re-tangle this file into
+
+#+begin_src emacs-lisp :tangle lisp/cyslas-utils.el :mkdir yes
+  (defun my/rebuild-emacs-config ()
+    (interactive)
+    (require 'org)
+    (org-babel-tangle-file (expand-file-name "README.org" user-emacs-directory)))
+
+  (provide 'cyslas-utils)
+#+end_src
+
+
+* Build ==init.el== file.
+
+#+begin_src emacs-lisp :tangle init.el
+  (add-to-list 'load-path "~/.config/emacs/lisp")
+  (require 'cyslas-base)
+  (require 'cyslas-utils)
+  (require 'cyslas-ui)
+  (require 'cyslas-coding)
+#+end_src
