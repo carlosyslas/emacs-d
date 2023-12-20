@@ -1,7 +1,11 @@
+;;; Save emacs customizations in a separate file.
+
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 (when (file-exists-p custom-file)
   (load-file custom-file))
+
+;;; Mac specific configuration
 
 (setq is-mac (equal system-type 'darwin))
 
@@ -16,6 +20,8 @@
   (setq mac-right-option-modifier 'control)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark)))
+
+;;; Setup package.el
 
 (eval-and-compile
   (customize-set-variable
@@ -39,5 +45,5 @@
     ;; initialize leaf-keywords.el
     (leaf-keywords-init)))
 
-;; Provide cyslas-base package
+
 (provide 'cyslas-base)

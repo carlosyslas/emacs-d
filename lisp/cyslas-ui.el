@@ -1,3 +1,5 @@
+;;; Declutter
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (pending-delete-mode t)
@@ -18,22 +20,32 @@
 (if (boundp 'scroll-bar-mode)
     (scroll-bar-mode -1))
 
+;;; Add padding to all windows
+
 (leaf spacious-padding
   :ensure t
   :config
   (spacious-padding-mode))
+
+;;; Theme
 
 (leaf modus-themes
   :ensure t
   :config
   (load-theme 'modus-vivendi-tinted))
 
+;;; All the icons
+
 (leaf all-the-icons
   :ensure t)
+
+;;; Modeline
 
 (leaf doom-modeline
   :ensure t
   :init (doom-modeline-mode 1))
+
+;;; Completion
 
 (leaf vertico
   :ensure t
