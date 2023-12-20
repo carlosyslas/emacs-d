@@ -69,10 +69,10 @@
   :ensure t
   ;; TAB-and-Go customizations
   :custom
-  (corfu-cycle	. t)           ;; Enable cycling for `corfu-next/previous'
+  (corfu-cycle		. t) ;; Enable cycling for `corfu-next/previous'
   (corfu-auto		. t)
-  (corfu-auto-delay . 0.1)
-  (corfu-auto-prefix . 3)
+  (corfu-auto-delay	. 0.1)
+  (corfu-auto-prefix	. 3)
   (corfu-preselect	. 'prompt) ;; Always preselect the prompt
 
   ;; Use TAB for cycling, default is `corfu-complete'.
