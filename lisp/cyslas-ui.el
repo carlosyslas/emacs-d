@@ -35,4 +35,45 @@
   :ensure t
   :init (doom-modeline-mode 1))
 
+(leaf vertico
+  :ensure t
+  :init
+  (vertico-mode))
+
+(leaf savehist
+  :ensure t
+  :init
+  (savehist-mode))
+
+(leaf orderless
+  :ensure t
+  :init
+  (setq completion-styles '(orderless basic)
+	completion-category-defaults nil
+	completion-category-overrides '((file (styles partial-completion)))))
+
+;; Corfu for inline completion
+(leaf corfu
+  :ensure t
+  ;; TAB-and-Go customizations
+  :custom
+  (corfu-cycle	. t)           ;; Enable cycling for `corfu-next/previous'
+  (corfu-auto		. t)
+  (corfu-auto-delay . 0.1)
+  (corfu-auto-prefix . 3)
+  (corfu-preselect	. 'prompt) ;; Always preselect the prompt
+
+  ;; Use TAB for cycling, default is `corfu-complete'.
+  :bind
+  (:corfu-map
+   ("M-SPC" . corfu-insert-separator)
+   ("TAB" . corfu-next)
+   ([tab] . corfu-next)
+   ("S-TAB" . corfu-previous)
+   ([backtab] . corfu-previous))
+
+  :init
+  (global-corfu-mode)
+  (corfu-history-mode))
+
 (provide 'cyslas-ui)
