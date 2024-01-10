@@ -46,4 +46,11 @@
     (leaf-keywords-init)))
 
 
+;;; Disable line wrapping
+(set-default 'truncate-lines t)
+
+;;; Use howm to take/organize notes
+;;; TODO: Use C-tab for other-window?
+
+
 (provide 'cyslas-base)

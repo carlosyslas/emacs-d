@@ -34,3 +34,7 @@
 (leaf python-ts-mode
   :ensure nil
   :mode "\\.py\\'")
+
+
+(leaf pyvenv
+  :ensure t)

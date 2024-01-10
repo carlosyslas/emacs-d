@@ -88,4 +88,9 @@
   (global-corfu-mode)
   (corfu-history-mode))
 
+;;; Font family and size
+
+(set-face-attribute 'default nil :height 150)
+(set-frame-font "Dank Mono")
+
 (provide 'cyslas-ui)
