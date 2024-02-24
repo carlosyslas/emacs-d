@@ -11,6 +11,14 @@
   :ensure t
   :init (global-flycheck-mode))
 
+;;; Manage projects with projectile
+(leaf projectile
+  :ensure t
+  :bind
+  (("C-c p" . projectile-command-map))
+  :config
+  (projectile-mode +1))
+
 ;;; LSP mode
 (leaf lsp-mode
   :ensure t

@@ -45,6 +45,21 @@
   :ensure t
   :init (doom-modeline-mode 1))
 
+
+;;; Ace window to jump between windows with ease
+(leaf ace-window
+  :ensure t
+  :config
+  (setq aw-keys '(?h ?j ?k ?l ?u ?i ?o ?p))
+  :bind
+  (("M-j" . ace-window)))
+
+
+;;; Use vundo to visualize the undo ring
+(leaf vundo
+  :ensure t)
+
+
 ;;; Completion
 
 (leaf vertico

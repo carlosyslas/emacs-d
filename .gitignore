@@ -4,3 +4,4 @@
 /custom.el
 /history
 /tree-sitter/
+*.eld

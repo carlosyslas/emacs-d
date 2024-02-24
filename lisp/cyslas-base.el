@@ -1,3 +1,12 @@
+;;; Disable bell sound
+
+(setq ring-bell-function 'ignore)
+
+;;; Backup files configuration
+
+(setq backup-directory-alist `(("." . "~/.saves"))
+      delete-old-versions t)
+
 ;;; Save emacs customizations in a separate file.
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
