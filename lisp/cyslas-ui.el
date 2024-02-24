@@ -79,10 +79,18 @@
       ("]" "⟷+" enlarge-window-horizontally :transient t)
       ("{" "↕-" shrink-window :transient t)
       ("}" "↕+" enlarge-window :transient t)
-      ("=" "≡+" balance-windows :transient t)]
+      ("=" "≡" balance-windows :transient t)]
      ["Misc"
       ("q" "Close" (lambda () (interactive)))]
      ]))
+
+;;; Install treemacs for pairing and video recording forms
+
+(leaf treemacs
+  :ensure t
+  :bind
+  (("M-0" . treemacs-select-window)))
+
 
 ;;; Use vundo to visualize the undo ring
 (leaf vundo
