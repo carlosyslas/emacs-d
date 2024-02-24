@@ -81,7 +81,7 @@
       ("}" "↕+" enlarge-window :transient t)
       ("=" "≡+" balance-windows :transient t)]
      ["Misc"
-      ("RET" "Close" (lambda () (interactive)))]
+      ("q" "Close" (lambda () (interactive)))]
      ]))
 
 ;;; Use vundo to visualize the undo ring
