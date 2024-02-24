@@ -45,15 +45,44 @@
   :ensure t
   :init (doom-modeline-mode 1))
 
-
-;;; Ace window to jump between windows with ease
-(leaf ace-window
+;;; Transient window management keymap
+(leaf transient
   :ensure t
-  :config
-  (setq aw-keys '(?h ?j ?k ?l ?u ?i ?o ?p))
-  :bind
-  (("M-j" . ace-window)))
-
+  :bind (("C-t" . my/transient-window-management))
+  :init
+  (transient-define-prefix my/transient-window-management ()
+    "Transient for managing windows"
+    [["Switch"
+      ("h" "←" windmove-left :transient t)
+      ("j" "↓" windmove-down :transient t)
+      ("k" "↑" windmove-up :transient t)
+      ("l" "→" windmove-right :transient t)]
+     ["Swap"
+      ("H" "←" windmove-swap-states-left :transient t)
+      ("J" "↓" windmove-swap-states-down :transient t)
+      ("K" "↑" windmove-swap-states-up :transient t)
+      ("L" "→" windmove-swap-states-right :transient t)]
+     ["Split"
+      ("v" "∣" split-window-right :transient t)
+      ("s" "—" split-window-below :transient t)
+      ("V" "∣" (lambda () (interactive) (select-window (split-window-right))) :transient t)
+      ("S" "—" (lambda () (interactive) (select-window (split-window-below))) :transient t)]
+     ["Delete"
+      ("dh" "←" windmove-delete-left :transient t)
+      ("dj" "↓" windmove-delete-down :transient t)
+      ("dk" "↑" windmove-delete-up :transient t)
+      ("dl" "→" windmove-delete-right :transient t)
+      ("dd" "→" delete-window :transient t)
+      ("do" "→" delete-other-windows :transient t)]
+     ["Resize"
+      ("[" "⟷-" shrink-window-horizontally :transient t)
+      ("]" "⟷+" enlarge-window-horizontally :transient t)
+      ("{" "↕-" shrink-window :transient t)
+      ("}" "↕+" enlarge-window :transient t)
+      ("=" "≡+" balance-windows :transient t)]
+     ["Misc"
+      ("RET" "Close" (lambda () (interactive)))]
+     ]))
 
 ;;; Use vundo to visualize the undo ring
 (leaf vundo
