@@ -84,7 +84,38 @@
       ("q" "Close" (lambda () (interactive)))]
      ]))
 
-;;; Install treemacs for pairing and video recording forms
+;;; Move between windows with Meta + Shift
+
+(global-set-key (kbd "M-H") #'windmove-left)
+(global-set-key (kbd "M-J") #'windmove-down)
+(global-set-key (kbd "M-K") #'windmove-up)
+(global-set-key (kbd "M-L") #'windmove-right)
+(global-set-key (kbd "M-+") #'balance-windows)
+
+(defun my/pairing-form ()
+  "Enable turn on pre-defined features for pair programming."
+  (save-selected-window
+    (treemacs)
+    (global-display-line-numbers-mode 1)))
+
+(defun my/coding-form ()
+  "Enable turn on pre-defined features for solo-programming."
+  (save-selected-window
+    (treemacs-select-window)
+    (treemacs-quit)
+    (global-display-line-numbers-mode -1)))
+
+(defvar my/editor-forms '(
+			  ("💻 Coding" . my/coding-form)
+			  ("👥 Pairing" . my/pairing-form)
+			  ))
+
+(defun my/select-editor-forms ()
+  (interactive)
+  (funcall (alist-get (completing-read "prueba"
+				       my/editor-forms) my/editor-forms nil nil 'equal)))
+
+;;; install treemacs for pairing and video recording forms
 
 (leaf treemacs
   :ensure t
@@ -103,6 +134,12 @@
   :ensure t
   :init
   (vertico-mode))
+
+(leaf all-the-icons-completion
+  :ensure t
+  :after (all-the-icons)
+  :init
+  (all-the-icons-completion-mode))
 
 (leaf savehist
   :ensure t
