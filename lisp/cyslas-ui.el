@@ -106,13 +106,13 @@
     (global-display-line-numbers-mode -1)))
 
 (defvar my/editor-forms '(
-			  ("💻 Coding" . my/coding-form)
-			  ("👥 Pairing" . my/pairing-form)
+			  ("👨🏻‍💻 Coding" . my/coding-form)
+			  ("🤝🏻 Pairing" . my/pairing-form)
 			  ))
 
 (defun my/select-editor-forms ()
   (interactive)
-  (funcall (alist-get (completing-read "prueba"
+  (funcall (alist-get (completing-read "Editor form: "
 				       my/editor-forms) my/editor-forms nil nil 'equal)))
 
 ;;; install treemacs for pairing and video recording forms
