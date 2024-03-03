@@ -5,6 +5,13 @@
 
 (provide 'cyslas-coding)
 
+;;; Show TODOs in magit buffer
+
+(leaf magit-todos
+  :ensure t
+  :config
+  (magit-todos-mode 1))
+
 
 ;;; Flycheck for diagnostics
 (leaf flycheck
@@ -66,8 +73,8 @@
   (apheleia-global-mode +1)
   (setf
    (alist-get 'prettier-typescript apheleia-formatters)
-   '("apheleia-npx" "prettier" "--stdin-filepath" filepath "--parser=typescript")
-   ))
+   '("apheleia-npx" "prettier" "--stdin-filepath" filepath "--parser=typescript")))
+
 ;;; Python
 
 (leaf python-ts-mode
