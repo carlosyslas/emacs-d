@@ -106,14 +106,23 @@
     (global-display-line-numbers-mode -1)))
 
 (defvar my/editor-forms '(
-			  ("👨🏻‍💻 Coding" . my/coding-form)
-			  ("🤝🏻 Pairing" . my/pairing-form)
-			  ))
+                          ("👨🏻‍💻 Coding" . my/coding-form)
+                          ("🤝🏻 Pairing" . my/pairing-form)
+                          ))
 
 (defun my/select-editor-forms ()
   (interactive)
   (funcall (alist-get (completing-read "Editor form: "
-				       my/editor-forms) my/editor-forms nil nil 'equal)))
+                                       my/editor-forms) my/editor-forms nil nil 'equal)))
+
+;;; Eshell
+
+(defun eshell/p ()
+  "cd to any of the known projectile projects."
+  (eshell/cd
+   (completing-read "Project: "
+                    (project-known-project-roots))))
+
 
 ;;; install treemacs for pairing and video recording forms
 
@@ -150,8 +159,8 @@
   :ensure t
   :init
   (setq completion-styles '(orderless basic)
-	completion-category-defaults nil
-	completion-category-overrides '((file (styles partial-completion)))))
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
 
 ;; Corfu for inline completion
 (leaf corfu
