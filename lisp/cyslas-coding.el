@@ -1,9 +1,51 @@
+;;; Auto close pairs
+
+(electric-pair-mode 1)
+
+;;; Expand region
+
+(use-package expand-region
+  :ensure t
+  :bind (("C-=" . er/expand-region)))
+
 ;;; Magit for version control
 
-(leaf magit
+(use-package magit
   :ensure t)
 
-(provide 'cyslas-coding)
+;;; Yasnippet
+
+(defun my/get-buffer-camel-case-name ()
+  (s-lower-camel-case
+   (file-name-sans-extension
+    (buffer-name (current-buffer)))))
+
+(defun my/get-buffer-pascal-case-name ()
+  (s-upper-camel-case
+   (file-name-sans-extension
+    (buffer-name (current-buffer)))))
+
+
+;; WIP
+(defun my/identity-with-callback (v cb)
+  "Return the same value V it got at the first argument and execute the CB argument."
+  (funcall cb)
+  v)
+
+;; WIP
+(defun my/funcall-after-yas-expansion (cb args)
+  "Call CB after yasnippet expansion passing ARGS."
+  (my/identity-with-callback yas-text (lambda ()
+                                        (when yas-moving-away-p
+                                          (apply cb args)))))
+
+
+
+(use-package yasnippet
+  :ensure t
+  :config
+  (setq yas-triggers-in-field t)
+  (yas-global-mode 1))
 
 ;;; Show TODOs in magit buffer
 
@@ -116,3 +158,6 @@
 (use-package tsx-ts-mode
   :ensure nil
   :mode "\\.tsx\\'")
+
+
+(provide 'cyslas-coding)

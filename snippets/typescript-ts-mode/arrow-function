@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Arrow function
+# key: afn
+# --
+$1($2)${3:: $4} => $5

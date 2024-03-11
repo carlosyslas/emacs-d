@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: arrow function component
+# key: afc
+# --
+import React from 'react';
+
+export const ${1:`(my/get-buffer-pascal-case-name)`} = ($2) => {
+  $0
+
+  return (
+       ${3:<div>$4</div>}
+  );
+}

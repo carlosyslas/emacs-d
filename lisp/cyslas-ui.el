@@ -86,11 +86,17 @@
 
 ;;; Move between windows with Meta + Shift
 
-(global-set-key (kbd "M-H") #'windmove-left)
-(global-set-key (kbd "M-J") #'windmove-down)
-(global-set-key (kbd "M-K") #'windmove-up)
-(global-set-key (kbd "M-L") #'windmove-right)
-(global-set-key (kbd "M-+") #'balance-windows)
+(keymap-global-set "M-H" #'windmove-left)
+(keymap-global-set "M-J" #'windmove-down)
+(keymap-global-set "M-K" #'windmove-up)
+(keymap-global-set "M-L" #'windmove-right)
+(keymap-global-set "M-+" #'balance-windows)
+
+;;; Bind C-o to #'other-window
+
+(keymap-global-set "C-o" #'other-window)
+
+;;; Define my editor "forms"
 
 (defun my/pairing-form ()
   "Enable turn on pre-defined features for pair programming."

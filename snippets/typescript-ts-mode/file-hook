@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: file hook
+# key: fhk
+# --
+const ${1:`(my/get-buffer-camel-case-name)`} = $2($3)${4:: $5} => {
+  $6
+}$0
