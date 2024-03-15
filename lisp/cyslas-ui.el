@@ -96,6 +96,14 @@
 
 (keymap-global-set "C-o" #'other-window)
 
+;;; Jump to char using avy
+
+(use-package avy
+  :ensure t
+  :bind ("C-;" . avy-goto-char)
+  :config
+  (setq avy-background t))
+
 ;;; Define my editor "forms"
 
 (defun my/pairing-form ()

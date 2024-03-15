@@ -80,6 +80,21 @@
 (use-package rg
   :ensure t)
 
+(defun my/ripgrep-symbol-in-project ()
+  "Find the symbol at point using ripgrep."
+  (interactive)
+  (let ((bounds (find-tag-default-bounds))
+        (project (project-current))
+        )
+    (if project
+        (cond
+         (bounds
+          (rg (buffer-substring-no-properties (car bounds) (cdr bounds))
+              "*.*" (cdr project)))
+         (t
+          (message "No symbol at point")))
+      (message "You are not in a project"))))
+
 ;;; LSP mode
 (leaf lsp-mode
   :ensure t
@@ -87,6 +102,7 @@
   (setq lsp-keymap-prefix "C-c l")
   :hook
   ((python-ts-mode . lsp)
+   (tsx-ts-mode . lsp)
    (typescript-ts-mode . lsp)
    )
   ;; if you want which-key integration
