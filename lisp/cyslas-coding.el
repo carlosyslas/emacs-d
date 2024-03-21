@@ -176,6 +176,37 @@
 
 (setq apheleia-log-only-errors nil)
 
+;;; Comment lines without moving the point
+
+(defun my/comment-line ()
+  "Comment lines without moving the point."
+  (interactive)
+  (save-excursion
+    (comment-line 1)))
+
+(keymap-global-set "M-;" #'my/comment-line)
+
+
+;;; Mark current line
+
+(defun my/mark-line ()
+  (interactive)
+  (move-beginning-of-line nil)
+
+  (push-mark (point) nil t)
+  (move-end-of-line nil))
+
+(keymap-global-set "S-SPC" #'my/mark-line)
+
+
+;;; Devdocs
+
+
+(use-package devdocs
+  :ensure t
+  :bind (("C-h D" . devdocs-lookup)))
+
+
 ;;; Python
 
 (use-package python-ts-mode
