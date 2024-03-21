@@ -8,6 +8,14 @@
   :ensure t
   :bind (("C-=" . er/expand-region)))
 
+;;; Multiple cursors
+
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C->". mc/mark-next-like-this)
+         ("C-<". mc/mark-previous-like-this)
+         ("C-c C-<". mc/mark-all-like-this)))
+
 ;;; Magit for version control
 
 (use-package magit
@@ -94,6 +102,21 @@
          (t
           (message "No symbol at point")))
       (message "You are not in a project"))))
+
+;;; Use prodigy to run services
+
+(setq my/prodigy-services-file (expand-file-name "prodigy-services.el" user-emacs-directory))
+
+(defun my/load-prodigy-services-file ()
+  "Load my configuration for running services with prodigy.el."
+  (unless (file-exists-p my/prodigy-services-file)
+    (with-temp-buffer (write-file my/prodigy-services-file)))
+  (when (file-exists-p my/prodigy-services-file)
+    (load-file my/prodigy-services-file)))
+
+(use-package prodigy
+  :ensure t
+  :config (my/load-prodigy-services-file))
 
 ;;; LSP mode
 (leaf lsp-mode

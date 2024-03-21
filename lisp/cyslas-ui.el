@@ -96,6 +96,11 @@
 
 (keymap-global-set "C-o" #'other-window)
 
+;;; Repeat mark pop command with just one C-u
+
+(setq set-mark-command-repeat-pop t)
+
+
 ;;; Jump to char using avy
 
 (use-package avy

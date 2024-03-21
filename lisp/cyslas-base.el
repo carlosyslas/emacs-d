@@ -35,8 +35,8 @@
 (eval-and-compile
   (customize-set-variable
    'package-archives '(("org" . "https://orgmode.org/elpa/")
-		       ("melpa" . "https://melpa.org/packages/")
-		       ("gnu" . "https://elpa.gnu.org/packages/")))
+                       ("melpa" . "https://melpa.org/packages/")
+                       ("gnu" . "https://elpa.gnu.org/packages/")))
   (package-initialize)
   (unless (package-installed-p 'leaf)
     (package-refresh-contents)
@@ -54,6 +54,9 @@
     ;; initialize leaf-keywords.el
     (leaf-keywords-init)))
 
+
+;;; Use M+k to kill entire line
+(keymap-global-set "M-k" #'kill-whole-line)
 
 ;;; Disable line wrapping
 (set-default 'truncate-lines t)
