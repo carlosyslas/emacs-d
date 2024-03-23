@@ -20,6 +20,10 @@
 (if (boundp 'scroll-bar-mode)
     (scroll-bar-mode -1))
 
+;;; Dired
+
+(setq dired-dwim-target t)
+
 ;;; Add padding to all windows
 
 (leaf spacious-padding
