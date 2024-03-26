@@ -38,6 +38,12 @@
   :config
   (load-theme 'modus-vivendi-tinted))
 
+;;; Move text
+(use-package move-text
+  :ensure t
+  :config
+  (move-text-default-bindings))
+
 ;;; All the icons
 
 (leaf all-the-icons
