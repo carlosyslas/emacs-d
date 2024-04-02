@@ -38,6 +38,12 @@
   :config
   (load-theme 'modus-vivendi-tinted))
 
+;;; Move where I mean
+(use-package mwim
+  :ensure t
+  :bind (("C-a" . mwim-beginning-of-code-or-line)
+         ("C-e" . mwim-end-of-code-or-line)))
+
 ;;; Move text
 (use-package move-text
   :ensure t

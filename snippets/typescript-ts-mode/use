@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: use
+# key: use
+# --
+const ${1:{}} = use$2($3);$0
