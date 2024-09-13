@@ -32,11 +32,10 @@
   (spacious-padding-mode))
 
 ;;; Theme
-
-(leaf modus-themes
+(use-package kaolin-themes
   :ensure t
   :config
-  (load-theme 'modus-vivendi-tinted))
+  (load-theme 'kaolin-aurora))
 
 ;;; Move where I mean
 (use-package mwim
@@ -57,9 +56,17 @@
 
 ;;; Modeline
 
-(leaf doom-modeline
+(use-package mood-line
   :ensure t
-  :init (doom-modeline-mode 1))
+  :config
+  (mood-line-mode)
+  (setq mood-line-glyph-alist mood-line-glyphs-fira-code)
+  )
+
+(use-package minions
+  :ensure t
+  :config
+  (minions-mode))
 
 ;;; Transient window management keymap
 (leaf transient
