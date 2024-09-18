@@ -197,9 +197,25 @@
 
 ;;; Python
 
+(defun my/easy-underscore (arg)
+  "Insert '_' instead of ';'.  If ARG is provided insert ';'."
+  ;; Stolen from https://github.com/gopar/.emacs.d/blob/4b5d487f96ad0d3ee2eb54ae11686679804ffbe0/README.org?plain=1#L122-L128
+  (interactive "P")
+  (if arg
+      (insert ";")
+    (insert "_")))
+
+(defun my/bind-easy-underscore ()
+  "Helper function to bind easy-underscore only in python-buffers."
+  (local-set-key (kbd ";") #'my/easy-underscore))
+
 (use-package python-ts-mode
   :ensure nil
-  :mode "\\.py\\'")
+  :mode "\\.py\\'"
+  :hook (python-ts-mode . my/bind-easy-underscore))
+
+(setenv "WORKON_HOME" (expand-file-name "~/.local/share/virtualenvs/"))
+
 
 (leaf pyvenv
   :ensure t)

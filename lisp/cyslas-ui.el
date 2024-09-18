@@ -228,6 +228,13 @@
   (global-corfu-mode)
   (corfu-history-mode))
 
+;;; Pulse
+(defun my/pulse-current-line (&rest _)
+  (pulse-momentary-highlight-one-line (point)))
+
+(dolist (command '(other-window))
+  (advice-add command :after #'my/pulse-current-line))
+
 ;;; Font family and size
 
 (set-face-attribute 'default nil :height 150)
