@@ -48,20 +48,11 @@
                                           (apply cb args)))))
 
 
-
 (use-package yasnippet
   :ensure t
   :config
   (setq yas-triggers-in-field t)
   (yas-global-mode 1))
-
-;;; Show TODOs in magit buffer
-
-(use-package magit-todos
-  :ensure t
-  :config
-  (magit-todos-mode 1))
-
 
 ;;; Show gid diff
 (use-package diff-hl
@@ -75,16 +66,8 @@
   :ensure t
   :init (global-flycheck-mode))
 
-;;; Manage projects with projectile
-(leaf projectile
-  :ensure t
-  :bind
-  (("C-c p" . projectile-command-map))
-  :config
-  (projectile-mode +1))
 
 ;;; Use ripgrep for searching
-
 (use-package rg
   :ensure t)
 
@@ -103,23 +86,9 @@
           (message "No symbol at point")))
       (message "You are not in a project"))))
 
-;;; Use prodigy to run services
-
-(setq my/prodigy-services-file (expand-file-name "prodigy-services.el" user-emacs-directory))
-
-(defun my/load-prodigy-services-file ()
-  "Load my configuration for running services with prodigy.el."
-  (unless (file-exists-p my/prodigy-services-file)
-    (with-temp-buffer (write-file my/prodigy-services-file)))
-  (when (file-exists-p my/prodigy-services-file)
-    (load-file my/prodigy-services-file)))
-
-(use-package prodigy
-  :ensure t
-  :config (my/load-prodigy-services-file))
 
 ;;; LSP mode
-(leaf lsp-mode
+(use-package lsp-mode
   :ensure t
   :init
   (setq lsp-keymap-prefix "C-c l")
@@ -135,7 +104,7 @@
 (add-hook 'prog-mode-hook #'lsp-deferred)
 
 
-(leaf lsp-pyright
+(use-package lsp-pyright
   :ensure t
   :hook (python-mode . (lambda ()
                          (require 'lsp-pyright)
@@ -189,7 +158,6 @@
 
 ;;; Devdocs
 
-
 (use-package devdocs
   :ensure t
   :bind (("C-h D" . devdocs-lookup)))
@@ -217,7 +185,7 @@
 (setenv "WORKON_HOME" (expand-file-name "~/.local/share/virtualenvs/"))
 
 
-(leaf pyvenv
+(use-package pyvenv
   :ensure t)
 
 ;;; React
