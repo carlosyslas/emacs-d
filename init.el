@@ -3,7 +3,6 @@
 
 ;;; Commentary:
 
-
 ;;; Code:
 
 ;;;; Basic config:
@@ -52,6 +51,18 @@
 ;; TODO: Use C-tab for other-window?
 
 ;;;; Coding:
+
+;; Duplicate line
+(defun my/duplicate-line ()
+  "Duplicates the current line."
+  (interactive)
+  (save-mark-and-excursion
+    (kill-whole-line)
+    (yank)
+    (yank))
+  (forward-line))
+
+(global-set-key (kbd "C-,") #'my/duplicate-line)
 
 ;; Auto close pairs
 (electric-pair-mode 1)
@@ -174,9 +185,6 @@
   :bind (("C-h D" . devdocs-lookup)))
 
 ;; Python
-(use-package python-mode
-  :hook (python-mode . tree-sitter-mode))
-
 (defun my/easy-underscore (arg)
   "Insert '_' instead of ';'.  If ARG is provided insert ';'."
   ;; Stolen from https://github.com/gopar/.emacs.d/blob/4b5d487f96ad0d3ee2eb54ae11686679804ffbe0/README.org?plain=1#L122-L128
@@ -185,9 +193,9 @@
       (insert ";")
     (insert "_")))
 
-(defun my/bind-easy-underscore ()
-  "Helper function to bind easy-underscore only in python-buffers."
-  (local-set-key (kbd ";") #'my/easy-underscore))
+(use-package python-mode
+  :hook (python-mode . tree-sitter-mode)
+  :bind ((";" . my/easy-underscore)))
 
 (setenv "WORKON_HOME" (expand-file-name "~/.local/share/virtualenvs/"))
 
@@ -206,7 +214,6 @@
 (use-package tsx-ts-mode
   :ensure nil
   :mode "\\.tsx\\'")
-
 
 ;;;; UI:
 
@@ -232,7 +239,6 @@
     (scroll-bar-mode -1))
 
 ;; Dired
-
 (setq dired-dwim-target t)
 
 ;; Theme
@@ -247,8 +253,8 @@
 ;; Move text
 (use-package move-text
   :ensure t
-  :config
-  (move-text-default-bindings))
+  :bind (("M-p" . move-text-up)
+         ("M-n" . move-text-down)))
 
 ;;; All the icons
 (use-package all-the-icons
@@ -315,13 +321,6 @@
   (setq completion-styles '(orderless basic)
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
-
-;; Pulse
-(defun my/pulse-current-line (&rest _)
-  (pulse-momentary-highlight-one-line (point)))
-
-(dolist (command '(other-window))
-  (advice-add command :after #'my/pulse-current-line))
 
 ;; Font family and size
 (set-face-attribute 'default nil :height 150)
