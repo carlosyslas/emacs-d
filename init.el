@@ -193,7 +193,7 @@
       (insert ";")
     (insert "_")))
 
-(use-package python-mode
+(use-package python
   :hook (python-mode . tree-sitter-mode)
   :bind ((";" . my/easy-underscore)))
 
@@ -202,8 +202,12 @@
 (use-package pyvenv
   :ensure t)
 
-;; React
+;; Vue
+(use-package vue-mode
+  :ensure t
+  :mode "\\.vue\\'")
 
+;; React
 (customize-set-variable 'indent-tabs-mode nil)
 
 (use-package typescript-ts-mode
@@ -323,7 +327,7 @@
         completion-category-overrides '((file (styles partial-completion)))))
 
 ;; Font family and size
-(set-face-attribute 'default nil :height 150)
+(set-face-attribute 'default nil :height 130)
 ;; (set-frame-font "Dank Mono")
 (set-frame-font "Adwaita Mono")
 
