@@ -194,8 +194,9 @@
     (insert "_")))
 
 (use-package python
-  :hook (python-mode . tree-sitter-mode)
-  :bind ((";" . my/easy-underscore)))
+  :mode ("\\.py\\'" . python-ts-mode)
+  :bind (:map python-ts-mode-map
+              (";" . my/easy-underscore)))
 
 (setenv "WORKON_HOME" (expand-file-name "~/.local/share/virtualenvs/"))
 
