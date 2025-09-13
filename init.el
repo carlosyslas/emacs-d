@@ -1,7 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 ;;; init.el --- My emacs custom configuration file.
 
-;;; Comentary:
+;;; Commentary:
 
 
 ;;; Code:
@@ -38,6 +38,7 @@
 
 ;; Setup package.el
 (eval-and-compile
+  (require 'package)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   (package-initialize))
 
@@ -54,6 +55,13 @@
 
 ;; Auto close pairs
 (electric-pair-mode 1)
+
+;; Tree-sitter
+(use-package tree-sitter
+  :ensure t)
+
+(use-package tree-sitter-langs
+  :ensure t)
 
 ;; Expand region
 (use-package expand-region
@@ -134,30 +142,6 @@
           (message "No symbol at point")))
       (message "You are not in a project"))))
 
-
-;; LSP mode
-(use-package lsp-mode
-  :ensure t
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-  :hook
-  ((python-ts-mode . lsp)
-   (tsx-ts-mode . lsp)
-   (typescript-ts-mode . lsp)
-   )
-  ;; if you want which-key integration
-  (lsp-mode . lsp-enable-which-key-integration)
-  :commands lsp)
-
-(add-hook 'prog-mode-hook #'lsp-deferred)
-
-
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-pyright)
-                         (lsp))))
-
 ;; Apheleia for code formatting
 (use-package apheleia
   :ensure t
@@ -184,14 +168,15 @@
 
 (keymap-global-set "M-;" #'my/comment-line)
 
-
 ;; Devdocs
 (use-package devdocs
   :ensure t
   :bind (("C-h D" . devdocs-lookup)))
 
-
 ;; Python
+(use-package python-mode
+  :hook (python-mode . tree-sitter-mode))
+
 (defun my/easy-underscore (arg)
   "Insert '_' instead of ';'.  If ARG is provided insert ';'."
   ;; Stolen from https://github.com/gopar/.emacs.d/blob/4b5d487f96ad0d3ee2eb54ae11686679804ffbe0/README.org?plain=1#L122-L128
@@ -204,13 +189,7 @@
   "Helper function to bind easy-underscore only in python-buffers."
   (local-set-key (kbd ";") #'my/easy-underscore))
 
-(use-package python-ts-mode
-  :ensure nil
-  :mode "\\.py\\'"
-  :hook (python-ts-mode . my/bind-easy-underscore))
-
 (setenv "WORKON_HOME" (expand-file-name "~/.local/share/virtualenvs/"))
-
 
 (use-package pyvenv
   :ensure t)
@@ -272,7 +251,6 @@
   (move-text-default-bindings))
 
 ;;; All the icons
-
 (use-package all-the-icons
   :ensure t)
 
