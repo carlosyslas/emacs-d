@@ -48,7 +48,6 @@
 (set-default 'truncate-lines t)
 
 ;; Use howm to take/organize notes
-;; TODO: Use C-tab for other-window?
 
 ;; Crux for quality of life
 (use-package crux
@@ -272,9 +271,6 @@
 (keymap-global-set "M-K" #'windmove-up)
 (keymap-global-set "M-L" #'windmove-right)
 (keymap-global-set "M-+" #'balance-windows)
-
-;; Bind C-o to #'other-window
-(keymap-global-set "C-o" #'other-window)
 
 ;; Repeat mark pop command with just one C-u
 (setq set-mark-command-repeat-pop t)
