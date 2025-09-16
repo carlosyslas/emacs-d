@@ -50,19 +50,17 @@
 ;; Use howm to take/organize notes
 ;; TODO: Use C-tab for other-window?
 
+;; Crux for quality of life
+(use-package crux
+  :ensure t
+  :bind (("C-k" . crux-smart-kill-line)
+         ("C-," . crux-duplicate-current-line-or-region)
+         ("M-o" . crux-other-window-or-switch-buffer)
+         ("C-c I" . crux-find-user-init-file)
+         ("C-<backspace>" . crux-kill-line-backwards)
+         ("C-g" . crux-keyboard-quit-dwim)))
+
 ;;;; Coding:
-
-;; Duplicate line
-(defun my/duplicate-line ()
-  "Duplicates the current line."
-  (interactive)
-  (save-mark-and-excursion
-    (kill-whole-line)
-    (yank)
-    (yank))
-  (forward-line))
-
-(global-set-key (kbd "C-,") #'my/duplicate-line)
 
 ;; Auto close pairs
 (electric-pair-mode 1)
@@ -247,7 +245,10 @@
 (setq dired-dwim-target t)
 
 ;; Theme
-(load-theme 'wombat)
+(use-package sweet-theme
+  :ensure t
+  :config
+  (load-theme 'sweet))
 
 ;; Move where I mean
 (use-package mwim
