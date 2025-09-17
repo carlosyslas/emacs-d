@@ -181,6 +181,12 @@
   :ensure t
   :bind (("C-h D" . devdocs-lookup)))
 
+;; Tree sitter
+(use-package treesit-auto
+  :ensure t
+  :config
+  (global-treesit-auto-mode))
+
 ;; Python
 (defun my/easy-underscore (arg)
   "Insert '_' instead of ';'.  If ARG is provided insert ';'."
@@ -191,14 +197,13 @@
     (insert "_")))
 
 (use-package python
-  :mode ("\\.py\\'" . python-ts-mode)
   :bind (:map python-ts-mode-map
               (";" . my/easy-underscore)))
 
-(setenv "WORKON_HOME" (expand-file-name "~/.local/share/virtualenvs/"))
-
-(use-package pyvenv
-  :ensure t)
+(use-package pet
+  :ensure t
+  :config
+  (add-hook 'python-base-mode-hook 'pet-mode -10))
 
 ;; Vue
 (use-package vue-mode
