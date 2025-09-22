@@ -185,6 +185,7 @@
 (use-package treesit-auto
   :ensure t
   :config
+  (setq treesit-font-lock-level 4) ;; TODO: This should set the customized value instead
   (global-treesit-auto-mode))
 
 ;; Python
@@ -212,15 +213,6 @@
 
 ;; React
 (customize-set-variable 'indent-tabs-mode nil)
-
-(use-package typescript-ts-mode
-  :ensure nil
-  :mode "\\.ts\\'")
-
-
-(use-package tsx-ts-mode
-  :ensure nil
-  :mode "\\.tsx\\'")
 
 ;;;; UI:
 
