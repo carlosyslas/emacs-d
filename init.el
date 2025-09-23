@@ -1,5 +1,4 @@
-;; -*- lexical-binding: t; -*-
-;;; init.el --- My emacs custom configuration file.
+;;; init.el --- My emacs custom configuration file. -- Init -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -60,6 +59,9 @@
          ("C-g" . crux-keyboard-quit-dwim)))
 
 ;;;; Coding:
+
+;; Prefer spaces over tabs
+(customize-set-variable 'indent-tabs-mode nil)
 
 ;; Auto close pairs
 (electric-pair-mode 1)
@@ -184,8 +186,10 @@
 ;; Tree sitter
 (use-package treesit-auto
   :ensure t
+  :custom
+  (treesit-auto-install t)
+  (treesit-font-lock-level 4)
   :config
-  (setq treesit-font-lock-level 4) ;; TODO: This should set the customized value instead
   (global-treesit-auto-mode))
 
 ;; Python
@@ -210,9 +214,6 @@
 (use-package vue-mode
   :ensure t
   :mode "\\.vue\\'")
-
-;; React
-(customize-set-variable 'indent-tabs-mode nil)
 
 ;;;; UI:
 
