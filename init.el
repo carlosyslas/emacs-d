@@ -6,8 +6,20 @@
 
 ;;;; Basic config:
 
-;; Disable bell sound
-(setq ring-bell-function 'ignore)
+(use-package emacs
+  :custom
+  ;; Declutter
+  (warning-minimum-level :error)
+  (initial-scratch-message nil)
+  (inhibit-startup-message t)
+  ;; Disable bell sound
+  (ring-bell-function 'ignore)
+  ;; Disable line wrapping
+  (truncate-lines t)
+  ;; Prefer spaces over tabs
+  (indent-tabs-mode nil)
+  ;; Repeat mark pop command with just one C-u
+  (set-mark-command-repeat-pop t))
 
 ;; Backup files configuration
 (setq backup-directory-alist `(("." . "~/.saves"))
@@ -43,9 +55,6 @@
 ;; Use M+k to kill entire line
 (keymap-global-set "M-k" #'kill-whole-line)
 
-;; Disable line wrapping
-(set-default 'truncate-lines t)
-
 ;; Use howm to take/organize notes
 
 ;; Crux for quality of life
@@ -59,9 +68,6 @@
          ("C-g" . crux-keyboard-quit-dwim)))
 
 ;;;; Coding:
-
-;; Prefer spaces over tabs
-(customize-set-variable 'indent-tabs-mode nil)
 
 ;; Auto close pairs
 (electric-pair-mode 1)
@@ -100,7 +106,6 @@
    (file-name-sans-extension
     (buffer-name (current-buffer)))))
 
-
 ;; WIP
 (defun my/identity-with-callback (v cb)
   "Return the same value V it got at the first argument and execute the CB argument."
@@ -126,12 +131,10 @@
   :init
   (global-diff-hl-mode))
 
-
 ;; Flycheck for diagnostics
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode))
-
 
 ;; Use ripgrep for searching
 (use-package rg
@@ -224,12 +227,6 @@
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
-(setq warning-minimum-level :error)
-
-(setq initial-scratch-message nil)
-
-(setq inhibit-startup-message t)
-
 (menu-bar-mode -1)
 
 (if (boundp 'tool-bar-mode)
@@ -239,7 +236,9 @@
     (scroll-bar-mode -1))
 
 ;; Dired
-(setq dired-dwim-target t)
+(use-package dired
+  :custom
+  (dired-dwim-target t))
 
 ;; Theme
 (use-package sweet-theme
@@ -269,9 +268,6 @@
 (keymap-global-set "M-K" #'windmove-up)
 (keymap-global-set "M-L" #'windmove-right)
 (keymap-global-set "M-+" #'balance-windows)
-
-;; Repeat mark pop command with just one C-u
-(setq set-mark-command-repeat-pop t)
 
 ;; Jump to char using avy
 (use-package avy
