@@ -7,6 +7,9 @@
 ;;;; Basic config:
 
 (use-package emacs
+  :init
+  ;; Create directory for backup, auto-save and lock files
+  (make-directory (expand-file-name "tmp/auto-saves/" user-emacs-directory) t)
   :custom
   ;; Declutter
   (warning-minimum-level :error)
@@ -19,18 +22,15 @@
   ;; Prefer spaces over tabs
   (indent-tabs-mode nil)
   ;; Repeat mark pop command with just one C-u
-  (set-mark-command-repeat-pop t))
-
-;; Backup and auto save files configuration
-(make-directory (expand-file-name "tmp/auto-saves/" user-emacs-directory) t)
-
-(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory)))
-      delete-old-versions t)
-
-(setq auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
-      auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
-
-(setq create-lockfiles nil)
+  (set-mark-command-repeat-pop t)
+  ;; Backup files
+  (backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
+  (delete-old-versions t)
+  ;; Auto-save files
+  (auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory))
+  (auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
+  ;; Lock-files
+  (create-lockfiles nil))
 
 ;; Save emacs customizations in a separate file.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
