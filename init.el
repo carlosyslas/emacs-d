@@ -327,7 +327,6 @@
 
 ;; Font family and size
 (set-face-attribute 'default nil :height 130)
-;; (set-frame-font "Dank Mono")
-(set-frame-font "Adwaita Mono")
+(set-frame-font "Dank Mono")
 
 ;;; init.el ends here
