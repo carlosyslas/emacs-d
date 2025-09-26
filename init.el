@@ -248,10 +248,9 @@
   (dired-dwim-target t))
 
 ;; Theme
-(use-package sweet-theme
-  :ensure t
+(use-package emacs
   :config
-  (load-theme 'sweet))
+  (load-theme 'modus-vivendi-tritanopia))
 
 ;; Move where I mean
 (use-package mwim
