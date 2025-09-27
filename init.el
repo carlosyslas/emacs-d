@@ -110,6 +110,17 @@
 (use-package magit
   :ensure t)
 
+;; TempEl
+(use-package tempel
+  :ensure t
+  :init
+  (defun tempel-setup-capf ()
+    (setq-local completion-at-point-functions
+                (cons #'tempel-expand
+                      completion-at-point-functions)))
+  :hook ((prog-mode . tempel-setup-capf)))
+
+
 ;; Yasnippet
 (defun my/get-buffer-camel-case-name ()
   (s-lower-camel-case
