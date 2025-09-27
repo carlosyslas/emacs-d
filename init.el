@@ -233,6 +233,10 @@
   :ensure t
   :mode "\\.vue\\'")
 
+;; Markdown
+(use-package markdown-mode
+  :ensure t)
+
 ;;;; UI:
 
 ;; Declutter
