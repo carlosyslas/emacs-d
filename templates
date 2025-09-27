@@ -1,3 +1,27 @@
 prog-mode
 
 (todo comment-start "TODO: ")
+(note comment-start "NOTE: ")
+(fixme comment-start "FIXME: ")
+
+python-mode
+
+(imp "import " q)
+(fimp "from " (p "module") " import " q)
+(fn "def " (p "function") "(" (p "*args, **kwargs") ")" (p " -> None") ":" n> q)
+(met "def " (p "method") "(self, " (p "*args, **kwargs") ")" (p " -> None") ":" n> q)
+(cls "class " (p "Class") "(" (p "object") "):" n> q)
+(forin "for " (p "i") " in " (p "collection") ":" n> q)
+(if "if " (p "condition") ":" n> q)
+(else "else:" n> q)
+(elif "elif " (p "condition") ":" n> q)
+(try "try:" n> q)
+(exc "except " (p "Exception") ":" n> q)
+(pt "print(" p ")" q)
+(dmod "class " (p "Name") "(models.Model):" n> q)
+(duid (p "id") " = models.UUIDField(" (p "primary_key=True, default=uuid.uuid4, editable=False") ")"  q)
+
+;; Local-Variables:
+;; mode: lisp-data
+;; outline-regexp: "[a-z]"
+;; End:
