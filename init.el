@@ -30,7 +30,12 @@
   (auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory))
   (auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
   ;; Lock-files
-  (create-lockfiles nil))
+  (create-lockfiles nil)
+  (tab-always-indent 'complete)
+  :config
+  ;; Use hippie-expand by default
+  (global-set-key [remap dabbrev-expand] 'hippie-expand))
+
 
 ;; Save emacs customizations in a separate file.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -79,12 +84,15 @@
 ;; Auto close pairs
 (electric-pair-mode 1)
 
-;; Tree-sitter
-(use-package tree-sitter
-  :ensure t)
-
-(use-package tree-sitter-langs
-  :ensure t)
+;; Corfu
+(use-package corfu
+  :ensure t
+  :init
+  (global-corfu-mode)
+  (corfu-history-mode)
+  (corfu-popupinfo-mode)
+  :custom
+  (corfu-cycle t))
 
 ;; Expand region
 (use-package expand-region
