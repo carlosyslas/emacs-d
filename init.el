@@ -121,36 +121,6 @@
   :hook ((prog-mode . tempel-setup-capf)))
 
 
-;; Yasnippet
-(defun my/get-buffer-camel-case-name ()
-  (s-lower-camel-case
-   (file-name-sans-extension
-    (buffer-name (current-buffer)))))
-
-(defun my/get-buffer-pascal-case-name ()
-  (s-upper-camel-case
-   (file-name-sans-extension
-    (buffer-name (current-buffer)))))
-
-;; WIP
-(defun my/identity-with-callback (v cb)
-  "Return the same value V it got at the first argument and execute the CB argument."
-  (funcall cb)
-  v)
-
-;; WIP
-(defun my/funcall-after-yas-expansion (cb args)
-  "Call CB after yasnippet expansion passing ARGS."
-  (my/identity-with-callback yas-text (lambda ()
-                                        (when yas-moving-away-p
-                                          (apply cb args)))))
-
-(use-package yasnippet
-  :ensure t
-  :config
-  (setq yas-triggers-in-field t)
-  (yas-global-mode 1))
-
 ;; Show git diff
 (use-package diff-hl
   :ensure t
@@ -182,21 +152,21 @@
       (message "You are not in a project"))))
 
 ;; Apheleia for code formatting
-(use-package apheleia
-  :ensure t
-  :config
-  ;; TODO: Find out how to properly set custom variable values
-  (setq apheleia-formatters-respect-indent-level nil)
-  (setf
-   (alist-get 'prettier-typescript apheleia-formatters)
-   '("npx" "prettier" "--stdin-filepath" filepath "--parser=typescript"
-     ))
-  (setf
-   (alist-get 'tsx-ts-mode apheleia-mode-alist)
-   'prettier-typescript)
-  (apheleia-global-mode +1))
+;; (use-package apheleia
+;;   :ensure t
+;;   :config
+;;   ;; TODO: Find out how to properly set custom variable values
+;;   (setq apheleia-formatters-respect-indent-level nil)
+;;   (setf
+;;    (alist-get 'prettier-typescript apheleia-formatters)
+;;    '("npx" "prettier" "--stdin-filepath" filepath "--parser=typescript"
+;;      ))
+;;   (setf
+;;    (alist-get 'tsx-ts-mode apheleia-mode-alist)
+;;    'prettier-typescript)
+;;   (apheleia-global-mode +1))
 
-(setq apheleia-log-only-errors nil)
+;; (setq apheleia-log-only-errors nil)
 
 ;; Comment lines without moving the point
 (defun my/comment-line ()
@@ -290,13 +260,6 @@
 ;;; All the icons
 (use-package all-the-icons
   :ensure t)
-
-;; move between windows with Meta + Shift
-(keymap-global-set "M-H" #'windmove-left)
-(keymap-global-set "M-J" #'windmove-down)
-(keymap-global-set "M-K" #'windmove-up)
-(keymap-global-set "M-L" #'windmove-right)
-(keymap-global-set "M-+" #'balance-windows)
 
 ;; Jump to char using avy
 (use-package avy
