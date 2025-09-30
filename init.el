@@ -243,7 +243,7 @@
 ;; Theme
 (use-package emacs
   :config
-  (load-theme 'modus-vivendi-tritanopia))
+  (load-theme 'modus-vivendi))
 
 ;; Move where I mean
 (use-package mwim
