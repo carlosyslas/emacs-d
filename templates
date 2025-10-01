@@ -1,5 +1,7 @@
 prog-mode
 
+(uuid (string-trim (with-output-to-string (call-process "uuidgen" nil standard-output))))
+(isots (format-time-string "%FT%H:%M:%S.%6NZ" (current-time)))
 (todo comment-start "TODO: ")
 (note comment-start "NOTE: ")
 (fixme comment-start "FIXME: ")
