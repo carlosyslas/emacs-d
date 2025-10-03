@@ -23,6 +23,10 @@ python-mode
 (dmod "class " (p "Name") "(models.Model):" n> q)
 (duid (p "id") " = models.UUIDField(" (p "primary_key=True, default=uuid.uuid4, editable=False") ")"  q)
 
+html-mode
+
+(t "<" (s tag) ">" q "</" (s tag) ">")
+
 ;; Local-Variables:
 ;; mode: lisp-data
 ;; outline-regexp: "[a-z]"

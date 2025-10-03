@@ -34,7 +34,8 @@
   (tab-always-indent 'complete)
   :config
   ;; Use hippie-expand by default
-  (global-set-key [remap dabbrev-expand] 'hippie-expand))
+  (global-set-key [remap dabbrev-expand] 'hippie-expand)
+  (global-auto-revert-mode 1))
 
 
 ;; Save emacs customizations in a separate file.
@@ -217,6 +218,15 @@
 ;; Markdown
 (use-package markdown-mode
   :ensure t)
+
+;; Postgres
+(use-package pg
+  :vc (:url "https://github.com/emarsden/pg-el/")
+  :ensure t)
+
+(use-package pgmacs :vc (:url "https://github.com/emarsden/pgmacs/")
+  :ensure t
+  :requires pg)
 
 ;;;; UI:
 
