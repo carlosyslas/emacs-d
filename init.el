@@ -192,6 +192,19 @@
   :config
   (global-treesit-auto-mode))
 
+;; LSP
+(use-package lsp-mode
+  :ensure t
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :commands lsp)
+
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp))))
+
 ;; Python
 (defun my/easy-underscore (arg)
   "Insert '_' instead of ';'.  If ARG is provided insert ';'."
