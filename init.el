@@ -241,6 +241,15 @@
   :ensure t
   :requires pg)
 
+;; Yaml
+(use-package yaml-mode
+  :ensure t)
+
+(use-package yaml-imenu
+  :ensure t
+  :config
+  (yaml-imenu-enable))
+
 ;;;; UI:
 
 ;; Declutter
