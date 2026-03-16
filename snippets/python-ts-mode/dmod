@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: django model
+# key: dmod
+# --
+class ${1:Name}(models.Model):
+    $0

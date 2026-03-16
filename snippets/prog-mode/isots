@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: isots
+# key: isots
+# --
+`(format-time-string "%FT%H:%M:%S.%6NZ" (current-time))`$0

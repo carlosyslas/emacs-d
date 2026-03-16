@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: function
+# key: fn
+# --
+def ${1:function}(${2:*args, **kwargs})${3: -> None}:
+    $0

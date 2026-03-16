@@ -32,10 +32,15 @@
   ;; Lock-files
   (create-lockfiles nil)
   (tab-always-indent 'complete)
+  ;; UI cleanup
+  (use-short-answers t)
   :config
   ;; Use hippie-expand by default
   (global-set-key [remap dabbrev-expand] 'hippie-expand)
-  (global-auto-revert-mode 1))
+  (global-auto-revert-mode 1)
+  (recentf-mode 1)
+  (save-place-mode 1)
+  (load-theme 'modus-vivendi))
 
 
 ;; Save emacs customizations in a separate file.
@@ -68,8 +73,6 @@
 ;; Use M+k to kill entire line
 (keymap-global-set "M-k" #'kill-whole-line)
 
-;; Use howm to take/organize notes
-
 ;; Crux for quality of life
 (use-package crux
   :ensure t
@@ -85,7 +88,7 @@
 ;; Auto close pairs
 (electric-pair-mode 1)
 
-;; Corfu
+;; Corfu for completions
 (use-package corfu
   :ensure t
   :init
@@ -94,6 +97,14 @@
   (corfu-popupinfo-mode)
   :custom
   (corfu-cycle t))
+
+;; Cape for completion-at-point backends
+(use-package cape
+  :ensure t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-yasnippet))
 
 ;; Expand region
 (use-package expand-region
@@ -111,16 +122,11 @@
 (use-package magit
   :ensure t)
 
-;; TempEl
-(use-package tempel
+;; YASnippet for snippets
+(use-package yasnippet
   :ensure t
-  :init
-  (defun tempel-setup-capf ()
-    (setq-local completion-at-point-functions
-                (cons #'tempel-expand
-                      completion-at-point-functions)))
-  :hook ((prog-mode . tempel-setup-capf)))
-
+  :config
+  (yas-global-mode 1))
 
 ;; Show git diff
 (use-package diff-hl
@@ -128,46 +134,11 @@
   :init
   (global-diff-hl-mode))
 
-;; Flycheck for diagnostics
-(use-package flycheck
+;; Apheleia for asynchronous code formatting
+(use-package apheleia
   :ensure t
-  :init (global-flycheck-mode))
-
-;; Use ripgrep for searching
-(use-package rg
-  :ensure t)
-
-(defun my/ripgrep-symbol-in-project ()
-  "Find the symbol at point using ripgrep."
-  (interactive)
-  (let ((bounds (find-tag-default-bounds))
-        (project (project-current))
-        )
-    (if project
-        (cond
-         (bounds
-          (rg (buffer-substring-no-properties (car bounds) (cdr bounds))
-              "*.*" (cdr project)))
-         (t
-          (message "No symbol at point")))
-      (message "You are not in a project"))))
-
-;; Apheleia for code formatting
-;; (use-package apheleia
-;;   :ensure t
-;;   :config
-;;   ;; TODO: Find out how to properly set custom variable values
-;;   (setq apheleia-formatters-respect-indent-level nil)
-;;   (setf
-;;    (alist-get 'prettier-typescript apheleia-formatters)
-;;    '("npx" "prettier" "--stdin-filepath" filepath "--parser=typescript"
-;;      ))
-;;   (setf
-;;    (alist-get 'tsx-ts-mode apheleia-mode-alist)
-;;    'prettier-typescript)
-;;   (apheleia-global-mode +1))
-
-;; (setq apheleia-log-only-errors nil)
+  :config
+  (apheleia-global-mode +1))
 
 ;; Comment lines without moving the point
 (defun my/comment-line ()
@@ -192,23 +163,25 @@
   :config
   (global-treesit-auto-mode))
 
-;; LSP
-(use-package lsp-mode
+;; Eglot for LSP support
+(use-package eglot
   :ensure t
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-  :commands lsp)
-
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-pyright)
-                         (lsp))))
+  :hook ((python-ts-mode . eglot-ensure)
+         (typescript-ts-mode . eglot-ensure)
+         (tsx-ts-mode . eglot-ensure)
+         (go-ts-mode . eglot-ensure)
+         (vue-mode . eglot-ensure))
+  :custom
+  (eglot-autoshutdown t)
+  :config
+  (add-to-list 'eglot-server-programs
+               '(vue-mode . ("vue-language-server" "--stdio"
+                             :initializationOptions
+                             (:typescript (:tsdk "node_modules/typescript/lib"))))))
 
 ;; Python
 (defun my/easy-underscore (arg)
   "Insert '_' instead of ';'.  If ARG is provided insert ';'."
-  ;; Stolen from https://github.com/gopar/.emacs.d/blob/4b5d487f96ad0d3ee2eb54ae11686679804ffbe0/README.org?plain=1#L122-L128
   (interactive "P")
   (if arg
       (insert ";")
@@ -222,6 +195,9 @@
   :ensure t
   :config
   (add-hook 'python-base-mode-hook 'pet-mode -10))
+
+;; Go
+(use-package go-ts-mode)
 
 ;; Vue
 (use-package vue-mode
@@ -252,10 +228,7 @@
 
 ;;;; UI:
 
-;; Declutter
-(fset 'yes-or-no-p 'y-or-n-p)
-
-(pending-delete-mode t)
+(delete-selection-mode 1)
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
@@ -272,11 +245,6 @@
   :custom
   (dired-dwim-target t))
 
-;; Theme
-(use-package emacs
-  :config
-  (load-theme 'modus-vivendi))
-
 ;; Move where I mean
 (use-package mwim
   :ensure t
@@ -289,7 +257,7 @@
   :bind (("M-p" . move-text-up)
          ("M-n" . move-text-down)))
 
-;;; All the icons
+;; All the icons
 (use-package all-the-icons
   :ensure t)
 
@@ -302,13 +270,13 @@
 
 ;; Eshell
 (defun eshell/p ()
-  "cd to any of the known projectile projects."
+  "cd to any of the known projects."
   (eshell/cd
    (completing-read "Project: "
                     (project-known-project-roots))))
 
 
-;; install treemacs for pairing and video recording forms
+;; Treemacs
 (use-package treemacs
   :ensure t
   :bind
@@ -323,6 +291,23 @@
   :ensure t
   :init
   (vertico-mode))
+
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode))
+
+(use-package consult
+  :ensure t
+  :bind (("C-s" . consult-line)
+         ("C-x b" . consult-buffer)
+         ("M-g g" . consult-goto-line)
+         ("M-g M-g" . consult-goto-line)
+         ("M-s r" . consult-ripgrep)
+         ("M-s f" . consult-find)
+         :map minibuffer-local-map
+         ("M-s" . consult-history)
+         ("M-r" . consult-history)))
 
 (use-package all-the-icons-completion
   :ensure t

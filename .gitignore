@@ -5,3 +5,6 @@
 /history
 /tree-sitter/
 *.eld
+/eln-cache/
+/tmp/
+/eshell/history

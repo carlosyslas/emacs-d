@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: django uuid field
+# key: duid
+# --
+${1:id} = models.UUIDField(${2:primary_key=True, default=uuid.uuid4, editable=False})$0

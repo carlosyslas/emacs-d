@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: uuid
+# key: uuid
+# --
+`(string-trim (with-output-to-string (call-process "uuidgen" nil standard-output)))`$0
